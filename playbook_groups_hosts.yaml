@@ -1,0 +1,20 @@
+---
+- name: Acesso remoto aos equipamentos
+  hosts: routers, switches
+  gather_facts: no
+  connection: local
+
+  tasks:
+  - name: OBTAIN LOGIN CREDENTIALS
+    include_vars: secret.yaml
+
+  - name: Define access
+    set_fact:
+      provider:
+        host: "{{ ansible_host }}"
+        username: "{{ creds['username'] }}"
+        password: "{{ creds['password'] }}"
+        auth_pass: "{{ creds['auth_pass'] }}"
+
+  - name: Obtain commands
+    include: commands_variance.yaml

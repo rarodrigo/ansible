@@ -1,0 +1,41 @@
+---
+  - name: Timestamp
+    set_fact: mydate="{{lookup('pipe','date +%Y%m%d_%H%M%S')}}"
+
+  - name: show running-config
+    ios_command:
+     provider: "{{ provider }}"
+     commands:
+        - show running-config
+    register: config1
+
+  - name: save output Running
+    copy:
+      content: "{{ config1.stdout[0] }}"
+      dest: "/home/rodrigo/Documents/ansible/{{ inventory_hostname }}_running_{{mydate}}.txt"
+
+  - name: show version
+    ios_command:
+      provider: "{{ provider }}"
+      commands:
+        - show version
+    register: config
+
+  - name: save output Version
+    copy:
+      content: "{{ config.stdout[0] }}"
+      dest: "/home/rodrigo/Documents/ansible/{{ inventory_hostname }}_version.txt"
+
+  - name: Cisco Spark - Text Message to a Room
+    cisco_spark:
+      recipient_type: roomId
+      recipient_id: "{{ spark['roomId'] }}"
+      message_type: text
+      personal_token: "{{ spark['spark_token'] }}"
+      message: "### Spark "
+
+  - name: Telegram Message - Grupo Teste
+    telegram:
+        token: "{{ telegram['token'] }}"
+        chat_id: "{{ telegram['chat-id'] }}"
+        msg: "{{ config1.stdout[0] }}"

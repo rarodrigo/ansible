@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: Send test message
+    telegram:
+        token: bot208875589:AAG_bwWhLVnQOC7DbBHqYEmkXVHtssuWrS8
+        chat_id: -1001109324225
+        msg: Ansible playbook calling
