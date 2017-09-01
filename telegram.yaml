@@ -5,6 +5,6 @@
   tasks:
   - name: Send test message
     telegram:
-        token: bot208875589:AAG_bwWhLVnQOC7DbBHqYEmkXVHtssuWrS8
-        chat_id: -1001109324225
+        token: botxxx:xxxx
+        chat_id: -yyyy
         msg: Ansible playbook calling
